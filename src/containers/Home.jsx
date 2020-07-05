@@ -1,27 +1,22 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
+import { connect } from 'react-redux';
 import Search from '../components/Search';
 import Categories from '../components/Categories';
 import Carrusel from '../components/Carrusel';
 import CarruselItem from '../components/CarruselItem';
 
-import useInitialState from '../hooks/useInitialState';
-
 import '../assets/styles/App.scss';
 
-const API = 'http://localhost:3000/initalState';
-
-const Home = () => {
-  const initialState = useInitialState(API);
-
+const Home = ({ myList, trends, originals }) => {
   return (
     <>
       <Search />
 
-      {initialState.mylist.length > 0 && (
+      {myList.length > 0 && (
         <Categories title='Mi Lista'>
           <Carrusel>
-            {initialState.mylist.map((item) => {
+            {myList.map((item) => {
               return <CarruselItem key={item.id} {...item} />;
             })}
           </Carrusel>
@@ -30,7 +25,7 @@ const Home = () => {
 
       <Categories title='Tendencias'>
         <Carrusel>
-          {initialState.trends.map((item) => {
+          {trends.map((item) => {
             return <CarruselItem key={item.id} {...item} />;
           })}
         </Carrusel>
@@ -38,7 +33,7 @@ const Home = () => {
 
       <Categories title='Originales de Platzi Video'>
         <Carrusel>
-          {initialState.originals.map((item) => {
+          {originals.map((item) => {
             return <CarruselItem key={item.id} {...item} />;
           })}
         </Carrusel>
@@ -47,4 +42,13 @@ const Home = () => {
   );
 };
 
-export default Home;
+const mapStateToProps = (state) => {
+  return {
+    myList: state.myList,
+    trends: state.trends,
+    originals: state.originals,
+  };
+};
+
+// export default connect(props, distpatch)(Home);
+export default connect(mapStateToProps, null)(Home);
