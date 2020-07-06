@@ -5,6 +5,7 @@ import '../assets/styles/components/Player.scss';
 import NotFound from './NotFound';
 
 const Player = (props) => {
+  // eslint-disable-next-line react/destructuring-assignment
   const { id } = props.match.params;
   const { playing } = props;
   const hasPlaying = Object.keys(playing).length > 0;
